@@ -1,5 +1,10 @@
 {
   "name": "purescript-io-lists",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rightfold/purescript-io-lists.git"
+  },
   "dependencies": {
     "purescript-bytestrings": "^2.3.0",
     "purescript-prelude": "^2.4.0",
