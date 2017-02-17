@@ -26,16 +26,25 @@ exports['append\''] = function(a) {
 exports.empty = null;
 
 exports.fromByteString = function(byteString) {
+  if (byteString.length === 0) {
+    return null;
+  }
   return byteString;
 };
 
 exports.fromString = function(string) {
   return function(encoding) {
+    if (string.length === 0) {
+      return null;
+    }
     return new $$String(string, encoding);
   };
 };
 
 exports.fromArray = function(array) {
+  if (array.length === 0) {
+    return null;
+  }
   return array;
 };
 
