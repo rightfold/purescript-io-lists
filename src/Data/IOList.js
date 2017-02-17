@@ -60,9 +60,3 @@ exports.foldl = function(onByteString) {
     };
   };
 };
-
-exports['toByteString\''] = function(toByteString) {
-  return function(list) {
-    return toByteString(list);
-  };
-};
