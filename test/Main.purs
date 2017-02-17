@@ -7,7 +7,8 @@ import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Eff.Ref (REF)
 import Control.Monad.Eff.Unsafe (unsafePerformEff)
 import Data.ByteString (ByteString)
-import Data.IOList (IOList, fromArray, fromByteString, fromString, toByteString, write)
+import Data.ByteString as ByteString
+import Data.IOList (IOList, fromArray, fromByteString, fromString, length, toByteString, write)
 import Node.Encoding (Encoding(..))
 import Node.Stream (end, Writable)
 import Prelude
@@ -34,6 +35,9 @@ main = runTest do
 
   test "fromArray [a, b] == a <> b" $
     quickCheck \a b -> fromArray [a, b] === a <> b
+
+  test "length a == ByteString.length (toByteString a)" $
+    quickCheck \a -> length a === ByteString.length (toByteString a)
 
   test "write" $
     quickCheck \a -> unsafePerformEff do

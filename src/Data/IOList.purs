@@ -6,6 +6,8 @@ module Data.IOList
   , fromString
   , fromArray
 
+  , length
+
   , foldl
   , toByteString
 
@@ -65,6 +67,15 @@ foreign import fromString :: String -> Encoding -> IOList
 
 -- | *O(1)* An I/O list with the bytes from many I/O lists.
 foreign import fromArray :: Array IOList -> IOList
+
+--------------------------------------------------------------------------------
+
+-- | *O(n)* How many bytes are in this I/O list?
+length :: IOList -> Int
+length = foldl onByteString onString 0
+  where
+  onByteString a b = a + ByteString.length b
+  onString a s e = a + ByteString.length (ByteString.fromString s e)
 
 --------------------------------------------------------------------------------
 
