@@ -45,7 +45,7 @@ exports.foldl = function(onByteString) {
           return zero;
         }
         if (list.constructor === Buffer) {
-          return onByteString(result)(list);
+          return onByteString(zero)(list);
         }
         if (list.constructor === Array) {
           var result = zero;
@@ -55,7 +55,7 @@ exports.foldl = function(onByteString) {
           }
           return result;
         }
-        return onString(result)(list.string)(list.encoding);
+        return onString(zero)(list.string)(list.encoding);
       };
     };
   };
