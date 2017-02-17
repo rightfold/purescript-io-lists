@@ -1,5 +1,7 @@
 'use strict';
 
+var Node_Encoding = require('../Node.Encoding');
+
 function $$String(string, encoding) {
   this.string = string;
   this.encoding = encoding;
@@ -56,6 +58,56 @@ exports.foldl = function(onByteString) {
           return result;
         }
         return onString(zero)(list.string)(list.encoding);
+      };
+    };
+  };
+};
+
+//----------------------------------------------------------------------------//
+
+exports.write = function(stream) {
+  return function(list) {
+    return function(callback) {
+      return function() {
+        var go = function(list, isLast) {
+          if (list === null) {
+            if (isLast) {
+              callback();
+            }
+            return true;
+          }
+          if (list.constructor === Buffer) {
+            if (isLast) {
+              return stream.write(list, callback);
+            } else {
+              stream.write(list);
+              return;
+            }
+          }
+          if (list.constructor === Array) {
+            var length = list.length;
+            for (var i = 0; i < length - 1; ++i) {
+              go(list[i], false);
+            }
+            if (length !== 0) {
+              if (isLast) {
+                return go(list[length - 1], true);
+              } else {
+                go(list[length - 1], false);
+                return;
+              }
+            }
+            return;
+          }
+          var nodeEncoding = Node_Encoding.encodingToNode(list.encoding);
+          if (isLast) {
+            return stream.write(list.string, nodeEncoding, callback);
+          } else {
+            stream.write(list.string, nodeEncoding);
+            return;
+          }
+        };
+        return go(list, true);
       };
     };
   };

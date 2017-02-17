@@ -8,12 +8,16 @@ module Data.IOList
 
   , foldl
   , toByteString
+
+  , write
   ) where
 
+import Control.Monad.Eff (Eff)
 import Data.ByteString (ByteString)
 import Data.ByteString as ByteString
 import Data.Monoid (class Monoid)
 import Node.Encoding (Encoding(..))
+import Node.Stream (Writable)
 import Prelude
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (oneOf, resize, stateful)
@@ -79,3 +83,13 @@ toByteString = foldl onByteString onString ByteString.empty
   where
   onByteString = (<>)
   onString b s e = b <> ByteString.fromString s e
+
+--------------------------------------------------------------------------------
+
+-- | *Θ(n)* Write an I/O list to a stream.
+foreign import write
+  :: ∀ r eff
+   . Writable r eff
+  -> IOList
+  -> Eff eff Unit
+  -> Eff eff Boolean

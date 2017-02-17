@@ -1,0 +1,6 @@
+{
+  "name": "purescript-io-lists",
+  "devDependencies": {
+    "memory-streams": "^0.1.1"
+  }
+}
