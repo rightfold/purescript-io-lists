@@ -6,6 +6,7 @@ module Data.IOList
   , fromString
   , fromArray
 
+  , isEmpty
   , length
 
   , foldl
@@ -69,6 +70,9 @@ foreign import fromString :: String -> Encoding -> IOList
 foreign import fromArray :: Array IOList -> IOList
 
 --------------------------------------------------------------------------------
+
+-- | *O(1)* Is this I/O list empty?
+foreign import isEmpty :: IOList -> Boolean
 
 -- | *O(n)* How many bytes are in this I/O list?
 length :: IOList -> Int

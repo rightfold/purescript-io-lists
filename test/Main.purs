@@ -8,7 +8,7 @@ import Control.Monad.Eff.Ref (REF)
 import Control.Monad.Eff.Unsafe (unsafePerformEff)
 import Data.ByteString (ByteString)
 import Data.ByteString as ByteString
-import Data.IOList (IOList, fromArray, fromByteString, fromString, length, toByteString, write)
+import Data.IOList (IOList, empty, fromArray, fromByteString, fromString, isEmpty, length, toByteString, write)
 import Node.Encoding (Encoding(..))
 import Node.Stream (end, Writable)
 import Prelude
@@ -35,6 +35,18 @@ main = runTest do
 
   test "fromArray [a, b] == a <> b" $
     quickCheck \a b -> fromArray [a, b] === a <> b
+
+  test "isEmpty empty" $
+    quickCheck $ isEmpty empty
+
+  test "isEmpty (fromByteString ByteString.empty)" $
+    quickCheck $ isEmpty (fromByteString ByteString.empty)
+
+  test "isEmpty (fromString \"\" UTF8)" $
+    quickCheck $ isEmpty (fromString "" UTF8)
+
+  test "length empty == 0" $
+    quickCheck $ length empty === 0
 
   test "length a == ByteString.length (toByteString a)" $
     quickCheck \a -> length a === ByteString.length (toByteString a)

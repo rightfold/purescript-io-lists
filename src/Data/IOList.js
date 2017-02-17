@@ -50,6 +50,12 @@ exports.fromArray = function(array) {
 
 //----------------------------------------------------------------------------//
 
+exports.isEmpty = function(list) {
+  return list === null;
+};
+
+//----------------------------------------------------------------------------//
+
 exports.foldl = function(onByteString) {
   return function(onString) {
     return function go(zero) {
