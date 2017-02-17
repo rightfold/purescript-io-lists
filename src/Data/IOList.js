@@ -8,10 +8,12 @@ function $$String(string, encoding) {
 }
 
 exports['append\''] = function(a) {
-  return function(b) {
-    if (a === null) {
+  if (a === null) {
+    return function(b) {
       return b;
-    }
+    };
+  }
+  return function(b) {
     if (b === null) {
       return a;
     }
