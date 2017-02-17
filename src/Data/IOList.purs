@@ -42,7 +42,10 @@ foreign import fromByteString :: ByteString -> IOList
 -- |  - *Θ(n)* with Erlang backends.
 foreign import fromString :: String -> Encoding -> IOList
 
--- | *O(1)* An I/O list with the bytes from many I/O lists.
+-- | An I/O list with the bytes from many I/O lists.
+-- |
+-- |  - *O(1)* with JavaScript backends.
+-- |  - *Θ(n)* with Erlang backends.
 foreign import fromArray :: Array IOList -> IOList
 
 --------------------------------------------------------------------------------
