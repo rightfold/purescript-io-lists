@@ -56,16 +56,10 @@ foreign import empty :: IOList
 -- | *O(1)* An I/O list with the bytes from a byte string.
 foreign import fromByteString :: ByteString -> IOList
 
--- | An I/O list with the bytes from an encoded string.
--- |
--- |  - *O(1)* with JavaScript backends.
--- |  - *Θ(n)* with Erlang backends.
+-- | *O(1)* An I/O list with the bytes from an encoded string.
 foreign import fromString :: String -> Encoding -> IOList
 
--- | An I/O list with the bytes from many I/O lists.
--- |
--- |  - *O(1)* with JavaScript backends.
--- |  - *Θ(n)* with Erlang backends.
+-- | *O(1)* An I/O list with the bytes from many I/O lists.
 foreign import fromArray :: Array IOList -> IOList
 
 --------------------------------------------------------------------------------
@@ -81,12 +75,7 @@ foreign import foldl
 
 -- | *Θ(n)* Fold an I/O list into a byte string.
 toByteString :: IOList -> ByteString
-toByteString = toByteString' $ foldl onByteString onString ByteString.empty
+toByteString = foldl onByteString onString ByteString.empty
   where
   onByteString = (<>)
   onString b s e = b <> ByteString.fromString s e
-
--- |  - Equivalent to `($)` with JavaScript backends.
--- |  - Will ignore the first argument and call `iolist_to_binary/1` with
--- |    Erlang backends.
-foreign import toByteString' :: (IOList -> ByteString) -> IOList -> ByteString
