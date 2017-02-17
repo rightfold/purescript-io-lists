@@ -7,7 +7,6 @@ module Data.IOList
   , fromArray
 
   , foldl
-  , foldM
   , toByteString
   ) where
 
@@ -73,20 +72,6 @@ foreign import foldl
   -> a
   -> IOList
   -> a
-
--- | *Θ(n)* Fold an I/O list.
-foldM
-  :: ∀ m a
-   . (Monad m)
-  => (a -> ByteString -> m a)
-  -> (a -> String -> Encoding -> m a)
-  -> a
-  -> IOList
-  -> m a
-foldM onByteString onString zero = foldl onByteString' onString' (pure zero)
-  where
-  onByteString' accM bs = accM >>= \acc -> onByteString acc bs
-  onString' accM s e = accM >>= \acc -> onString acc s e
 
 -- | *Θ(n)* Fold an I/O list into a byte string.
 toByteString :: IOList -> ByteString
