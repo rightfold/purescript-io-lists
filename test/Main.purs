@@ -45,6 +45,12 @@ main = runTest do
   test "isEmpty (fromString \"\" UTF8)" $
     quickCheck $ isEmpty (fromString "" UTF8)
 
+  test "isEmpty (fromArray [])" $
+    quickCheck $ isEmpty (fromArray [])
+
+  test "isEmpty (fromArray [empty])" $
+    quickCheck $ isEmpty (fromArray [empty])
+
   test "length empty == 0" $
     quickCheck $ length empty === 0
 

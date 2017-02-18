@@ -42,6 +42,9 @@ exports.fromString = function(string) {
 };
 
 exports.fromArray = function(array) {
+  array = array.filter(function(part) {
+    return part !== null;
+  });
   if (array.length === 0) {
     return null;
   }

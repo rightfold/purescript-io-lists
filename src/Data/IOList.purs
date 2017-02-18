@@ -66,7 +66,7 @@ foreign import fromByteString :: ByteString -> IOList
 -- | *O(1)* An I/O list with the bytes from an encoded string.
 foreign import fromString :: String -> Encoding -> IOList
 
--- | *O(1)* An I/O list with the bytes from many I/O lists.
+-- | *Θ(n)* An I/O list with the bytes from many I/O lists.
 foreign import fromArray :: Array IOList -> IOList
 
 --------------------------------------------------------------------------------
